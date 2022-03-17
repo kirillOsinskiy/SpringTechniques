@@ -1,8 +1,10 @@
 package com.osk.music;
 
+import java.util.List;
+
 public interface Music {
 
     void play();
 
-    String getSong();
+    List<String> getSong();
 }

@@ -1,34 +1,41 @@
 package com.osk.music;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Component
 public class MusicPlayer {
 
-//    private Music music;
+//    @Autowired
+//    @Qualifier("classic")
+    private Music classicalMusic;
 
-    private List<Music> musicList = new ArrayList<>();
+//    @Autowired
+//    @Qualifier("someRock")
+    private Music rockMusic;
 
-    private String name;
+    private final Random random = new Random();
 
-    private int volume;
-
-    public void playMusicList() {
-        musicList.forEach(this::playMusic);
+        @Autowired
+    public MusicPlayer(@Qualifier("classic") Music classicalMusic,
+                       @Qualifier("someRock") Music rockMusic) {
+        this.classicalMusic = classicalMusic;
+        this.rockMusic = rockMusic;
     }
 
-    private void playMusic(Music music) {
-        System.out.println("♪ Next song would be " + music.getSong());
-        music.play();
-        System.out.println();
+    public String playMusic(MusicStyle style) {
+        switch (style) {
+            case ROCK -> {
+                return rockMusic.getSong().get(random.nextInt(3));
+            }
+            case CLASSICAL -> {
+                return classicalMusic.getSong().get(random.nextInt(3));
+            }
+            default -> throw new IllegalArgumentException("Music style is incorrect!");
+        }
     }
 }

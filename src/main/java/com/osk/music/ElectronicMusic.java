@@ -1,5 +1,10 @@
 package com.osk.music;
 
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component("electro")
 public class ElectronicMusic implements Music {
     @Override
     public void play() {
@@ -7,7 +12,7 @@ public class ElectronicMusic implements Music {
     }
 
     @Override
-    public String getSong() {
-        return "Baby's got a temper";
+    public List<String> getSong() {
+        return List.of("Baby's got a temper", "Minotaur", "night");
     }
 }
