@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("classic")
 public class ClassicalMusic implements Music {
 
     private List<String> songs = List.of("Music of Angels", "Symphony #9", "Fly of Valkyrie");

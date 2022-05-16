@@ -1,10 +1,7 @@
 package com.osk.music;
 
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-@Component("electro")
 public class ElectronicMusic implements Music {
     @Override
     public void play() {

@@ -1,20 +1,21 @@
 package com.osk.music;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Computer {
 
-    private int id;
-    private MusicPlayer musicPlayer;
+    private final int id;
+    private final MusicPlayer musicPlayer;
 
     public Computer(MusicPlayer musicPlayer) {
         this.id = 1;
         this.musicPlayer = musicPlayer;
     }
 
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
+    }
+
     @Override
     public String toString() {
-        return "Computer " + id + " " + musicPlayer.playMusic(MusicStyle.CLASSICAL);
+        return "Computer " + id + " " + musicPlayer.playMusic();
     }
 }

@@ -1,41 +1,74 @@
 package com.osk.music;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.List;
 import java.util.Random;
 
 
-@Component
 public class MusicPlayer {
 
-//    @Autowired
+    @Value("${musicPlayer.name}")
+    private String name;
+
+    @Value("${musicPlayer.volume}")
+    private int volume;
+
+    //    @Autowired
 //    @Qualifier("classic")
-    private Music classicalMusic;
+//    private Music classicalMusic;
 
-//    @Autowired
+    //    @Autowired
 //    @Qualifier("someRock")
-    private Music rockMusic;
+//    private Music rockMusic;
 
-    private final Random random = new Random();
+    private List<Music> musicList;
 
-        @Autowired
-    public MusicPlayer(@Qualifier("classic") Music classicalMusic,
-                       @Qualifier("someRock") Music rockMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
+    private static final Random random = new Random();
+
+    @PostConstruct
+    public void doMyInit() {
+        System.out.println("Initialization ...");
     }
 
-    public String playMusic(MusicStyle style) {
-        switch (style) {
-            case ROCK -> {
-                return rockMusic.getSong().get(random.nextInt(3));
-            }
-            case CLASSICAL -> {
-                return classicalMusic.getSong().get(random.nextInt(3));
-            }
-            default -> throw new IllegalArgumentException("Music style is incorrect!");
-        }
+    @PreDestroy
+    public void doMyDestroy() {
+        System.out.println("Destroying bean ...");
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+//    public MusicPlayer(@Qualifier("classic") Music classicalMusic,
+//                       @Qualifier("someRock") Music rockMusic) {
+//        this.classicalMusic = classicalMusic;
+//        this.rockMusic = rockMusic;
+//    }
+
+    public MusicPlayer(List<Music> musicList) {
+        this.musicList = musicList;
+    }
+
+    public String playMusic() {
+        return musicList.get(random.nextInt(3)).getSong().get(random.nextInt(3));
+    }
+
+//    public String playMusic(MusicStyle style) {
+//        switch (style) {
+//            case ROCK -> {
+//                return rockMusic.getSong().get(random.nextInt(3));
+//            }
+//            case CLASSICAL -> {
+//                return classicalMusic.getSong().get(random.nextInt(3));
+//            }
+//            default -> throw new IllegalArgumentException("Music style is incorrect!");
+//        }
+//    }
 }
